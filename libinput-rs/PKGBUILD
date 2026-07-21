@@ -1,0 +1,53 @@
+pkgname=libinput-rs
+pkgver=0.1.1
+pkgrel=1
+pkgdesc="Drop-in Rust replacement for libinput.so"
+arch=('x86_64')
+url="https://github.com/SisyphusAeolides/libinput-rs"
+license=('MIT')
+depends=('glibc')
+makedepends=('cargo' 'gcc' 'git')
+provides=('libinput' 'libinput.so=10-64')
+conflicts=('libinput')
+backup=('etc/libinput-rs/config.json')
+options=('!lto')
+_commit=193854793c725e51356de5c64f4a9077131abbcf
+source=("git+${url}.git#commit=${_commit}")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "${pkgname}"
+  cargo metadata --no-deps --format-version 1 |
+    sed -n 's/.*"version":"\([^"]*\)".*/\1/p'
+}
+
+build() {
+  cd "${pkgname}"
+  export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--remap-path-prefix=${srcdir}=/usr/src/debug/${pkgname}"
+  cargo fetch --locked
+  ./build-shared.sh
+  cargo build --bin libinput-rs --release --frozen
+}
+
+check() {
+  cd "${pkgname}"
+  export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--remap-path-prefix=${srcdir}=/usr/src/debug/${pkgname}"
+  cargo test --locked --frozen
+  readelf -d target/release/libinput.so | grep -q 'Library soname: \[libinput.so.10\]'
+  readelf --dyn-syms --wide target/release/libinput.so | grep -q 'libinput_udev_create_context@@LIBINPUT_0.12.0'
+  readelf --dyn-syms --wide target/release/libinput.so | grep -q 'libinput_plugin_system_append_path@@LIBINPUT_1.30'
+}
+
+package() {
+  cd "${pkgname}"
+
+  install -Dm755 target/release/libinput.so "${pkgdir}/usr/lib/libinput.so.10"
+  ln -s libinput.so.10 "${pkgdir}/usr/lib/libinput.so"
+
+  install -Dm755 target/release/libinput-rs "${pkgdir}/usr/bin/libinput-rs"
+  install -Dm644 systemd/libinput-rs.service \
+    "${pkgdir}/usr/lib/systemd/system/libinput-rs.service"
+  install -Dm644 src/config.json "${pkgdir}/etc/libinput-rs/config.json"
+
+  install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+}

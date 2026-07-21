@@ -1,0 +1,20 @@
+pkgbase = libinput-rs
+	pkgdesc = Drop-in Rust replacement for libinput.so
+	pkgver = 0.1.1
+	pkgrel = 1
+	url = https://github.com/SisyphusAeolides/libinput-rs
+	arch = x86_64
+	license = MIT
+	makedepends = cargo
+	makedepends = gcc
+	makedepends = git
+	depends = glibc
+	provides = libinput
+	provides = libinput.so=10-64
+	conflicts = libinput
+	options = !lto
+	backup = etc/libinput-rs/config.json
+	source = git+https://github.com/SisyphusAeolides/libinput-rs.git#commit=193854793c725e51356de5c64f4a9077131abbcf
+	sha256sums = SKIP
+
+pkgname = libinput-rs

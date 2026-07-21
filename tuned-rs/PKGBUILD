@@ -1,0 +1,41 @@
+pkgname=tuned-rs
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Rust implementation of the TuneD system tuning daemon"
+arch=('x86_64')
+url="https://github.com/SisyphusAeolides/tuned-rs"
+license=('GPL-2.0-or-later')
+depends=('dbus' 'glibc' 'polkit' 'systemd')
+makedepends=('cargo' 'make')
+provides=('tuned' 'power-profiles-daemon')
+conflicts=('tuned' 'power-profiles-daemon')
+backup=('etc/tuned/ppd.conf' 'etc/tuned/tuned-main.conf')
+_commit=72d2ddcd20d92b1be642c54be27cffebc855020b
+source=(
+  "${pkgname}-${pkgver}.tar.gz::${url}/archive/${_commit}.tar.gz"
+  'README.arch.md'
+)
+sha256sums=(
+  'a20749de0a9d884ceaee7c90f13bf236f8842eb70371ec7415c6905c65c7ba84'
+  '95506d00e94c23381f4710a3accf5ba95025a804979f80d1e65b13ddaf08df1f'
+)
+
+prepare() {
+  cd "${pkgname}-${_commit}"
+  sed -i 's|/usr/sbin/|/usr/bin/|g' \
+    packaging/tuned-rs.service packaging/tuned-rs-ppd.service
+  sed -i '30,31d' Makefile
+}
+
+build() {
+  cd "${pkgname}-${_commit}"
+  cargo fetch --locked
+  cargo build --release --frozen
+}
+
+package() {
+  cd "${pkgname}-${_commit}"
+  make DESTDIR="${pkgdir}" PREFIX=/usr BINDIR=/usr/bin install
+  install -Dm644 "${srcdir}/README.arch.md" \
+    "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+}

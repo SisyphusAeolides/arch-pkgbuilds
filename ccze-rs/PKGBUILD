@@ -1,0 +1,35 @@
+pkgname=ccze-rs
+pkgver=0.3.0
+pkgrel=1
+pkgdesc="Memory-safe Rust replacement for the ccze log colorizer"
+arch=('x86_64')
+url="https://github.com/SisyphusAeolides/ccze-rs"
+license=('MIT')
+depends=('glibc')
+makedepends=('cargo')
+provides=('ccze')
+conflicts=('ccze')
+_commit=b6971613116d833602e800f2014b50b1650de4fd
+source=(
+  "${pkgname}-${pkgver}.tar.gz::${url}/archive/${_commit}.tar.gz"
+  'Cargo.lock'
+)
+sha256sums=(
+  'e8114bae98955715e835e10a739625b5c6eac36ae3344602558721e73cd54f5f'
+  '2fcf95006d1c9fa912d192fc4baaab2355328520641c606478e0c60e259e8b12'
+)
+
+prepare() {
+  cp "${srcdir}/Cargo.lock" "${pkgname}-${_commit}/Cargo.lock"
+}
+
+build() {
+  cd "${pkgname}-${_commit}"
+  cargo fetch --locked
+  cargo build --release --frozen
+}
+
+package() {
+  cd "${pkgname}-${_commit}"
+  install -Dm755 target/release/ccze "${pkgdir}/usr/bin/ccze"
+}

@@ -1,0 +1,17 @@
+pkgbase = ccze-rs
+	pkgdesc = Memory-safe Rust replacement for the ccze log colorizer
+	pkgver = 0.3.0
+	pkgrel = 1
+	url = https://github.com/SisyphusAeolides/ccze-rs
+	arch = x86_64
+	license = MIT
+	makedepends = cargo
+	depends = glibc
+	provides = ccze
+	conflicts = ccze
+	source = ccze-rs-0.3.0.tar.gz::https://github.com/SisyphusAeolides/ccze-rs/archive/b6971613116d833602e800f2014b50b1650de4fd.tar.gz
+	source = Cargo.lock
+	sha256sums = e8114bae98955715e835e10a739625b5c6eac36ae3344602558721e73cd54f5f
+	sha256sums = 2fcf95006d1c9fa912d192fc4baaab2355328520641c606478e0c60e259e8b12
+
+pkgname = ccze-rs

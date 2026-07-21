@@ -1,13 +1,14 @@
 pkgbase = libinput-rs
 	pkgdesc = Drop-in Rust replacement for libinput.so
 	pkgver = 0.1.1
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/SisyphusAeolides/libinput-rs
 	arch = x86_64
 	license = MIT
 	makedepends = cargo
 	makedepends = gcc
 	makedepends = git
+	makedepends = libinput
 	depends = glibc
 	provides = libinput
 	provides = libinput.so=10-64

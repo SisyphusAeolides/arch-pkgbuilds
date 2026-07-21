@@ -1,12 +1,12 @@
 pkgname=libinput-rs
 pkgver=0.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Drop-in Rust replacement for libinput.so"
 arch=('x86_64')
 url="https://github.com/SisyphusAeolides/libinput-rs"
 license=('MIT')
 depends=('glibc')
-makedepends=('cargo' 'gcc' 'git')
+makedepends=('cargo' 'gcc' 'git' 'libinput')
 provides=('libinput' 'libinput.so=10-64')
 conflicts=('libinput')
 backup=('etc/libinput-rs/config.json')
@@ -45,9 +45,28 @@ package() {
   ln -s libinput.so.10 "${pkgdir}/usr/lib/libinput.so"
 
   install -Dm755 target/release/libinput-rs "${pkgdir}/usr/bin/libinput-rs"
-  install -Dm644 systemd/libinput-rs.service \
-    "${pkgdir}/usr/lib/systemd/system/libinput-rs.service"
+  install -d "${pkgdir}/etc/libinput"
   install -Dm644 src/config.json "${pkgdir}/etc/libinput-rs/config.json"
 
+  install -Dm644 /usr/include/libinput.h "${pkgdir}/usr/include/libinput.h"
+  install -Dm644 /usr/lib/pkgconfig/libinput.pc "${pkgdir}/usr/lib/pkgconfig/libinput.pc"
+
+  install -Dm755 /usr/lib/udev/libinput-device-group \
+    "${pkgdir}/usr/lib/udev/libinput-device-group"
+  install -Dm755 /usr/lib/udev/libinput-fuzz-extract \
+    "${pkgdir}/usr/lib/udev/libinput-fuzz-extract"
+  install -Dm755 /usr/lib/udev/libinput-fuzz-to-zero \
+    "${pkgdir}/usr/lib/udev/libinput-fuzz-to-zero"
+  install -Dm644 /usr/lib/udev/rules.d/80-libinput-device-groups.rules \
+    "${pkgdir}/usr/lib/udev/rules.d/80-libinput-device-groups.rules"
+  install -Dm644 /usr/lib/udev/rules.d/90-libinput-fuzz-override.rules \
+    "${pkgdir}/usr/lib/udev/rules.d/90-libinput-fuzz-override.rules"
+
+  install -d "${pkgdir}/usr/share/libinput"
+  cp -a /usr/share/libinput/. "${pkgdir}/usr/share/libinput/"
+  install -Dm644 /usr/share/licenses/libinput/COPYING \
+    "${pkgdir}/usr/share/licenses/libinput/COPYING"
+  install -Dm644 /usr/share/licenses/libinput/COPYING \
+    "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
   install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 }

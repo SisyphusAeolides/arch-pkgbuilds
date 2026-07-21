@@ -1,15 +1,15 @@
 pkgname=boulderx
 pkgver=0.6.2
-pkgrel=1
+pkgrel=2
 pkgdesc="GTK4 IRC, Matrix, and Discord bot client"
 arch=('x86_64')
 url="https://github.com/SisyphusAeolides/boulderX"
 license=('GPL-2.0-or-later')
 depends=('gtk4' 'libadwaita' 'openssl' 'sqlite')
 makedepends=('appstream' 'cargo' 'desktop-file-utils' 'pkgconf')
-_commit=729fce5ebce6a80f97c9d5e01e27ee7393654b4e
+_commit=fb343d6a5f7a6370c61e5166866eae8059621af5
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${_commit}.tar.gz")
-sha256sums=('843f70a14c545e4661ba09fc4bb1fe8e3004f8962dfc9d94d5e1453329370943')
+sha256sums=('5bde566d59fb776113e6f41bdd01c4091d31e9d7404ac56f85bc1ef4857ccabb')
 
 build() {
   cd "boulderX-${_commit}"

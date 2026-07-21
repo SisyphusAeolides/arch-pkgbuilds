@@ -1,6 +1,6 @@
 pkgname=libinput-rs
 pkgver=0.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Rust replacement for libinput with a libinput.so.0-compatible ABI"
 arch=('x86_64')
 url="https://github.com/SisyphusAeolides/libinput-rs"
@@ -10,18 +10,15 @@ makedepends=('cargo')
 provides=('libinput.so=0-64')
 conflicts=('libinput')
 backup=('etc/libinput-rs/config.json')
-_commit=f53e20b7eff85b63f4f8408f94093e47b8a801e6
+_commit=b554cd527d1439ea0a4bbecf434837b9f277efbd
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${_commit}.tar.gz")
-sha256sums=('9203745ee0ba42b27ab18eb02b7fd48199db0046662139b610e5d062965dbd2e')
-
-prepare() {
-  cd "${pkgname}-${_commit}"
-  sed -i 's|/usr/sbin/modprobe|/usr/bin/modprobe|g' libinput-elan-reset.service
-}
+sha256sums=('23eb408e61d303b0fee417e0a272053d1c3f2e8cec64c3ce0b9b2129da386553')
 
 build() {
   cd "${pkgname}-${_commit}"
-  cargo build --release --locked
+  export RUSTFLAGS="${RUSTFLAGS:+${RUSTFLAGS} }--remap-path-prefix=${srcdir}=/usr/src/debug/${pkgname}"
+  ./build-shared.sh
+  cargo build --bin libinput-rs --release --locked
 }
 
 package() {

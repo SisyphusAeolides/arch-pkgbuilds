@@ -1,15 +1,12 @@
 pkgname=libinput-rs
 pkgver=0.1.1
-pkgrel=3
-pkgdesc="Rust replacement for libinput with a libinput.so.0-compatible ABI"
+pkgrel=4
+pkgdesc="Experimental Rust libinput implementation (isolated install)"
 arch=('x86_64')
 url="https://github.com/SisyphusAeolides/libinput-rs"
 license=('MIT')
 depends=('glibc')
 makedepends=('cargo')
-provides=('libinput' 'libinput.so=0-64')
-conflicts=('libinput')
-replaces=('libinput')
 backup=('etc/libinput-rs/config.json')
 _commit=b554cd527d1439ea0a4bbecf434837b9f277efbd
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${_commit}.tar.gz")
@@ -26,8 +23,8 @@ package() {
   cd "${pkgname}-${_commit}"
 
   install -Dm755 target/release/libinput-rs "${pkgdir}/usr/bin/libinput-rs"
-  install -Dm755 target/release/libinput.so "${pkgdir}/usr/lib/libinput.so.0"
-  ln -s libinput.so.0 "${pkgdir}/usr/lib/libinput.so"
+  install -Dm755 target/release/libinput.so "${pkgdir}/usr/lib/libinput-rs/libinput.so.0"
+  ln -s libinput.so.0 "${pkgdir}/usr/lib/libinput-rs/libinput.so"
   install -Dm644 src/config.json "${pkgdir}/etc/libinput-rs/config.json"
   install -Dm644 systemd/libinput-rs.service \
     "${pkgdir}/usr/lib/systemd/system/libinput-rs.service"

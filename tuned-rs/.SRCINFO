@@ -1,8 +1,9 @@
 pkgbase = tuned-rs
 	pkgdesc = Rust implementation of the TuneD system tuning daemon
 	pkgver = 0.1.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/SisyphusAeolides/tuned-rs
+	install = tuned-rs.install
 	arch = x86_64
 	license = GPL-2.0-or-later
 	makedepends = cargo

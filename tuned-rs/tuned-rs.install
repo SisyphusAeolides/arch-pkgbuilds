@@ -1,0 +1,13 @@
+_stop_conflicting_ppd() {
+  if command -v systemctl >/dev/null 2>&1; then
+    systemctl stop tlp-pd.service power-profiles-daemon.service tuned-ppd.service 2>/dev/null || true
+  fi
+}
+
+post_install() {
+  _stop_conflicting_ppd
+}
+
+post_upgrade() {
+  _stop_conflicting_ppd
+}

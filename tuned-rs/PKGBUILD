@@ -1,6 +1,6 @@
 pkgname=tuned-rs
 pkgver=0.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Rust implementation of the TuneD system tuning daemon"
 arch=('x86_64')
 url="https://github.com/SisyphusAeolides/tuned-rs"
@@ -9,6 +9,7 @@ depends=('dbus' 'glibc' 'polkit' 'systemd')
 makedepends=('cargo' 'make')
 provides=('tuned' 'power-profiles-daemon')
 conflicts=('tuned' 'power-profiles-daemon')
+install="${pkgname}.install"
 backup=('etc/tuned/ppd.conf' 'etc/tuned/tuned-main.conf')
 _commit=72d2ddcd20d92b1be642c54be27cffebc855020b
 source=(

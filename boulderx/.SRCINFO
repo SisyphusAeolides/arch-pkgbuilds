@@ -1,20 +1,21 @@
 pkgbase = boulderx
 	pkgdesc = GTK4 IRC, Matrix, and Discord bot client
 	pkgver = 0.6.2
-	pkgrel = 2
+	pkgrel = 3
 	url = https://github.com/SisyphusAeolides/boulderX
 	arch = x86_64
 	license = GPL-2.0-or-later
 	makedepends = appstream
 	makedepends = cargo
 	makedepends = desktop-file-utils
+	makedepends = git
 	makedepends = pkgconf
 	depends = gtk4
 	depends = libadwaita
 	depends = openssl
 	depends = sqlite
 	options = !lto
-	source = boulderx-0.6.2.tar.gz::https://github.com/SisyphusAeolides/boulderX/archive/fb343d6a5f7a6370c61e5166866eae8059621af5.tar.gz
-	sha256sums = 5bde566d59fb776113e6f41bdd01c4091d31e9d7404ac56f85bc1ef4857ccabb
+	source = git+https://github.com/SisyphusAeolides/boulderX.git#commit=5f07470571340b9a817e5f78f6eb919f57affeda
+	sha256sums = SKIP
 
 pkgname = boulderx

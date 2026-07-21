@@ -1,14 +1,18 @@
 pkgbase = libinput-rs
-	pkgdesc = Experimental Rust libinput implementation (isolated install)
+	pkgdesc = Rust replacement for libinput with libinput.so.10 ABI compatibility
 	pkgver = 0.1.1
-	pkgrel = 4
+	pkgrel = 5
 	url = https://github.com/SisyphusAeolides/libinput-rs
 	arch = x86_64
 	license = MIT
 	makedepends = cargo
 	depends = glibc
+	provides = libinput
+	provides = libinput.so=10-64
+	conflicts = libinput
+	replaces = libinput
 	backup = etc/libinput-rs/config.json
-	source = libinput-rs-0.1.1.tar.gz::https://github.com/SisyphusAeolides/libinput-rs/archive/b554cd527d1439ea0a4bbecf434837b9f277efbd.tar.gz
-	sha256sums = 23eb408e61d303b0fee417e0a272053d1c3f2e8cec64c3ce0b9b2129da386553
+	source = libinput-rs-0.1.1.tar.gz::https://github.com/SisyphusAeolides/libinput-rs/archive/1bfb51e459bfa5fef9c5c91a7ec425ddf6875cfd.tar.gz
+	sha256sums = 83c5c28c7f42da56ca924df8bc3eb1a52d941b8586e77e69c5e6f06a986bb0ed
 
 pkgname = libinput-rs

@@ -7,6 +7,7 @@ url="https://github.com/SisyphusAeolides/boulderX"
 license=('GPL-2.0-or-later')
 depends=('gtk4' 'libadwaita' 'openssl' 'sqlite')
 makedepends=('appstream' 'cargo' 'desktop-file-utils' 'pkgconf')
+options=('!lto')
 _commit=fb343d6a5f7a6370c61e5166866eae8059621af5
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${_commit}.tar.gz")
 sha256sums=('5bde566d59fb776113e6f41bdd01c4091d31e9d7404ac56f85bc1ef4857ccabb')
